@@ -1,0 +1,70 @@
+.main {
+    display: flex;
+    flex-direction: row;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.slotContainer {
+    width: 100px;
+    height: 100px;
+
+    background: white;
+    display: flex;
+}
+
+.slot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    border: 3px solid #7b1414;
+    border-radius: 8px;
+    margin: 0 2px;
+
+    overflow: hidden;
+    position: relative;
+}
+
+.reel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 4em;
+    color: #c70000;
+}
+
+@keyframes spinFromBottom {
+    0% {
+        transform: translateY(0); /* Start from the bottom */
+    }
+    100% {
+        transform: translateY(-100%); /* Move to the top */
+    }
+}
+
+.spinning {
+    animation: spinFromBottom 0.5s linear infinite;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: end;
+
+    width: 100%;
+    height: 100%;
+    text-align: end;
+    font-size: 4em;
+    color: #c70000;
+}
+
