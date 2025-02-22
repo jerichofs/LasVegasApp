@@ -3,7 +3,7 @@ import { SlotsController } from '../controllers';
 
 export const SlotsRouter = Router();
 
-SlotsRouter.get('/start', SlotsController.start);
+SlotsRouter.post('/start', SlotsController.start);
 
 SlotsRouter.post('/play', SlotsController.play);
 
