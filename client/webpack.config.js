@@ -3,6 +3,7 @@ const BUILD_PATH = path.resolve(__dirname, "build");
 const SRC_PATH = path.resolve(__dirname, "src");
 const APP_PATH = path.resolve(SRC_PATH, "index.jsx");
 const COMPONENTS_PATH = path.resolve(SRC_PATH, "components");
+const CONTEXTS_PATH = path.resolve(SRC_PATH, "contexts");
 const PORT = 3001;
 
 // plugins
@@ -47,6 +48,7 @@ module.exports = {
     extensions: [".js", ".jsx", ".css"],
     alias: {
       components: COMPONENTS_PATH,
+      contexts: CONTEXTS_PATH,
     },
   },
   plugins: [

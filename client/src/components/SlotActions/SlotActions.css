@@ -1,0 +1,40 @@
+.main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0 10px;
+}
+
+.play {
+    width: 70px;
+    padding: 10px;
+    border: 2px solid #e4a700;
+    border-radius: 4px;
+    font-size: 16px;
+
+    color: #e4a700;
+    background-color: white;
+    outline: none;
+    cursor: pointer;
+}
+
+.play:hover {
+    color: #c70000;
+}
+
+.play:active {
+    color: #e4a700;
+}
+
+.play:disabled {
+    color: #B6B4B6;
+    background-color: white;
+    border: 2px solid #B6B4B6;
+}
