@@ -6,7 +6,7 @@ const COMPONENTS_PATH = path.resolve(SRC_PATH, "components");
 const CONTEXTS_PATH = path.resolve(SRC_PATH, "contexts");
 const API_PATH = path.resolve(SRC_PATH, "api");
 const ENV = path.resolve(__dirname, ".env");
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 // plugins
 const HtmlWebpackPlugin = require("html-webpack-plugin");
