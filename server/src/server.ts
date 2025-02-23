@@ -1,11 +1,16 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
+import cors from "cors";
 import session from 'express-session';
 import { SlotsRouter } from './routes';
 
 const app: express.Application = express();
 
+app.use(cors({
+  origin: process.env.FE_URL || 'http://localhost:3001',
+  credentials: true,
+}));
 app.use(session({
   secret: process.env.SESSION_SECRET || 'session_secret',
   resave: false,

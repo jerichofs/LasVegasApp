@@ -4,6 +4,11 @@ type rewardsType = {
   [K in (typeof SYMBOLS)[number]]: number;
 };
 
+interface ITwist {
+  isSuccess: boolean;
+  credits: number;
+}
+
 export class SlotsService {
   private readonly _rewards: rewardsType;
 
@@ -44,5 +49,18 @@ export class SlotsService {
     }
     // max cheat 60% to re-roll
     return 0.6;
+  };
+
+  // basically gives a 50% chance of doubling credits or loosing in half, active once per session
+  public twist = (credits: number): ITwist => {
+    const twistSuccess = Math.random() < 0.5;
+
+    if (twistSuccess) {
+      return {
+        isSuccess: true,
+        credits: credits * 2,
+      };
+    }
+    return { isSuccess: false, credits: Math.floor(credits / 2) };
   };
 }

@@ -8,11 +8,18 @@ class Slots {
   }
 
   start = async (req: Request, res: Response) => {
-    req.session.game = { credits: 10, account: 0 };
-    return res.status(200).json({
-      status: 200,
-      game: req.session.game,
-    });
+    try {
+      req.session.game = { credits: 10, account: 0, isTwistAllowed: true };
+      return res.status(200).json({
+        status: 200,
+        game: req.session.game,
+      });
+    } catch (e) {
+      return res.status(500).json({
+        status: 500,
+        message: e?.message || 'Something went wrong',
+      });
+    }
   };
 
   play = async (req: Request, res: Response) => {
@@ -21,7 +28,7 @@ class Slots {
       if (!req.session.game) {
         return res.status(400).json({
           status: 400,
-          error: 'No active game session',
+          message: 'No active game session',
         });
       }
       const game = req.session.game;
@@ -29,7 +36,7 @@ class Slots {
       if (game.credits <= 0) {
         return res.status(400).json({
           status: 400,
-          error: 'Insufficient amount of credits to play',
+          message: 'Insufficient amount of credits to play',
         });
       }
 
@@ -57,46 +64,109 @@ class Slots {
       }
 
       return res.status(200).json({
+        status: 200,
         slots,
         isWinning,
+        reward,
         credits: game.credits,
         account: game.account,
+        isTwistAllowed: game.isTwistAllowed,
       });
     } catch (e) {
       return res.status(500).json({
         status: 500,
-        error: e?.message || 'Something went wrong',
+        message: e?.message || 'Something went wrong',
       });
     }
   };
 
   cashout = async (req: Request, res: Response) => {
-    if (!req.session.game) {
-      return res.status(400).json({
-        status: 400,
-        error: 'No active game session',
-      });
-    }
-
-    const game = req.session.game;
-    const cashOutCredits = game.credits;
-
-    // Move credits to account
-    game.account = (game.account || 0) + cashOutCredits;
-    // destroy the session to end the game
-    req.session.destroy((err) => {
-      if (err) {
-        return res.status(500).json({
-          status: 500,
-          error: 'Cash-out failed',
+    try {
+      if (!req.session.game) {
+        return res.status(400).json({
+          status: 400,
+          message: 'No active game session',
         });
       }
+
+      const game = req.session.game;
+
+      // Move credits to account
+      game.account = (game.account || 0) + game.credits;
+      // destroy the session to end the game
+      req.session.destroy((err) => {
+        if (err) {
+          return res.status(500).json({
+            status: 500,
+            message: 'Cash-out failed',
+          });
+        }
+        return res.status(200).json({
+          status: 200,
+          credits: 0,
+          account: game.account,
+          isTwistAllowed: false,
+        });
+      });
+    } catch (e) {
+      return res.status(500).json({
+        status: 500,
+        message: e?.message || 'Something went wrong',
+      });
+    }
+  };
+
+  twist = async (req: Request, res: Response) => {
+    try {
+      if (!req.session.game) {
+        return res.status(400).json({
+          status: 400,
+          message: 'No active game session',
+        });
+      }
+      if (!req.session.game.isTwistAllowed) {
+        return res.status(400).json({
+          status: 400,
+          message: 'You can make twist only once per game session',
+        });
+      }
+      if (!req.session.game.credits) {
+        return res.status(400).json({
+          status: 400,
+          message: 'Insufficient amount of credits to twist',
+        });
+      }
+      req.session.game.isTwistAllowed = false;
+
+      const game = req.session.game;
+      const twist = this.slotsService.twist(game.credits);
+      req.session.game.credits = twist.credits;
+
+      if (twist.isSuccess) {
+        return res.status(200).json({
+          status: 200,
+          type: 'success',
+          credits: twist.credits,
+          account: game.account,
+          isTwistAllowed: false,
+          message: 'Congratulations! You doubled your credits!',
+        });
+      }
+
       return res.status(200).json({
         status: 200,
-        cashedOutCredits: cashOutCredits,
+        type: 'error',
+        credits: twist.credits,
         account: game.account,
+        isTwistAllowed: false,
+        message: 'You are out of luck, loose credits in half (:',
       });
-    });
+    } catch (e) {
+      return res.status(500).json({
+        status: 500,
+        message: e?.message || 'Something went wrong',
+      });
+    }
   };
 }
 
