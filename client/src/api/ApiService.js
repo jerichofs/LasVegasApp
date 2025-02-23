@@ -17,7 +17,6 @@ class API {
 
   post(url) {
     const urlPath = `${this._baseURL}${url}`;
-    console.log('urlPath', urlPath);
     const params = {
       ...this.params,
       headers: { ...this.headers },
