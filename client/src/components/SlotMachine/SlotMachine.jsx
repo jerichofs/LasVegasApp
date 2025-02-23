@@ -2,9 +2,34 @@ import React from "react";
 import { useAppContext } from "contexts/AppContext/AppContext";
 import styles from './SlotMachine.css';
 
-const SlotMachine = () => {
-  const {isSpinning, setSpinning, setSpins, spins, reels} = useAppContext();
+const SYMBOLS = {
+  Cherry: 'C',
+  Lemon: 'L',
+  Orange: 'O',
+  Watermelon: 'W',
+};
 
+const SlotMachine = () => {
+  const { spins, slots } = useAppContext();
+
+  const getStyleSlot = (index) => {
+    if (slots.length) {
+      const slot = slots[index];
+      return styles[slot];
+    }
+    return styles.reel;
+  };
+  const getSymbolSlot = (index) => {
+    if (!slots.length) {
+      return 'X';
+    }
+    const slot = slots[index];
+    const symbolSlot = SYMBOLS[slot];
+    if (symbolSlot) {
+      return symbolSlot;
+    }
+    return 'X';
+  };
   return (
     <div className={styles.main}>
       <table>
@@ -18,8 +43,8 @@ const SlotMachine = () => {
               <div
                 className={styles.slot}
               >
-                <div className={spins[index] ? styles.spinning : styles.reel}>
-                  {spins[index] ? 'X' : reels[index] || 'X' }
+                <div className={spins[index] ? styles.spinning : getStyleSlot(index)}>
+                  {spins[index] ? 'X' : getSymbolSlot(index) }
                 </div>
               </div>
             </td>

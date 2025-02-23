@@ -43,6 +43,26 @@
     color: #c70000;
 }
 
+.Cherry {
+    composes: reel;
+    color: #D2042D;
+}
+
+.Lemon {
+    composes: reel;
+    color: #FFD700;
+}
+
+.Orange {
+    composes: reel;
+    color: #FFA500;
+}
+
+.Watermelon {
+    composes: reel;
+    color: #FC6C85;
+}
+
 @keyframes spinFromBottom {
     0% {
         transform: translateY(0); /* Start from the bottom */

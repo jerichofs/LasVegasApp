@@ -3,11 +3,16 @@ import { useAppContext } from "contexts/AppContext/AppContext";
 import styles from './AccountDetails.css';
 
 const AccountDetails = () => {
-  const {isSpinning, setSpinning, setSpins, spins, reels} = useAppContext();
+  const { credits, account } = useAppContext();
 
   return (
     <div className={styles.main}>
-      <p className={styles.details}>Credits: 10</p>
+      <div className={styles.detailsContainer}>
+        <p className={styles.details}>Credits: {credits}</p>
+      </div>
+      <div className={styles.detailsContainer}>
+        <p className={styles.details}>Account: {account}</p>
+      </div>
     </div>
   );
 };

@@ -4,11 +4,14 @@ const SRC_PATH = path.resolve(__dirname, "src");
 const APP_PATH = path.resolve(SRC_PATH, "index.jsx");
 const COMPONENTS_PATH = path.resolve(SRC_PATH, "components");
 const CONTEXTS_PATH = path.resolve(SRC_PATH, "contexts");
+const API_PATH = path.resolve(SRC_PATH, "api");
+const ENV = path.resolve(__dirname, ".env");
 const PORT = 3001;
 
 // plugins
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   mode: "development",
@@ -49,9 +52,11 @@ module.exports = {
     alias: {
       components: COMPONENTS_PATH,
       contexts: CONTEXTS_PATH,
+      api: API_PATH,
     },
   },
   plugins: [
+    new Dotenv({ path: ENV }),
     new HtmlWebpackPlugin({
       title: "Casino App",
       template: "public/index.html",

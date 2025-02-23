@@ -6,6 +6,7 @@ declare module 'express-session' {
     game?: {
       credits: number;
       account: number;
+      isTwistAllowed: boolean;
     };
   }
 }
