@@ -1,10 +1,7 @@
 import React from "react";
-import { useAppContext } from "contexts/AppContext/AppContext";
 import styles from './AccountDetails.css';
 
-const AccountDetails = () => {
-  const { credits, account } = useAppContext();
-
+const AccountDetails = ({ credits, account }) => {
   return (
     <div className={styles.main}>
       <div className={styles.detailsContainer}>

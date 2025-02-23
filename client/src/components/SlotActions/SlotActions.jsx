@@ -99,7 +99,13 @@ const SlotActions = () => {
           type: 'success',
           msg: 'Cashed out Credits!'
         });
+        return;
       }
+      const message = response.message || 'Failed to make a cash out!';
+      setMessage({
+        type: 'error',
+        msg: message,
+      });
     } catch (error) {
       setMessage({
         type: 'error',

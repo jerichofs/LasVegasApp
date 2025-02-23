@@ -9,7 +9,7 @@ import { ApiService } from 'api/ApiService';
 import styles from './App.css';
 
 const App = () => {
-  const { setCredits, setAccount, setGameStarted, setTwist, setMessage } = useAppContext();
+  const { setCredits, credits, setAccount, account, setGameStarted, setTwist, setMessage } = useAppContext();
   useEffect(() => {
     const startSession = async () => {
       try {
@@ -36,7 +36,7 @@ const App = () => {
       <div className={styles.main}>
         <h1 className={styles.header}>Slot Machine</h1>
         <SlotMachine />
-        <AccountDetails />
+        <AccountDetails credits={credits} account={account} />
         <SlotActions />
         <Alerts />
       </div>

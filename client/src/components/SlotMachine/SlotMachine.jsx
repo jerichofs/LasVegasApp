@@ -35,7 +35,7 @@ const SlotMachine = () => {
       <table>
         <tbody>
         <tr className={styles.row}>
-          {spins.map((item, index) => (
+          {spins.map((spin, index) => (
             <td
               key={index}
               className={styles.slotContainer}
@@ -43,8 +43,8 @@ const SlotMachine = () => {
               <div
                 className={styles.slot}
               >
-                <div className={spins[index] ? styles.spinning : getStyleSlot(index)}>
-                  {spins[index] ? 'X' : getSymbolSlot(index) }
+                <div className={spin ? styles.spinning : getStyleSlot(index)}>
+                  {spin ? 'X' : getSymbolSlot(index) }
                 </div>
               </div>
             </td>
